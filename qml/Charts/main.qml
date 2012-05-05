@@ -4,11 +4,15 @@ import com.nokia.meego 1.0
 PageStackWindow {
     id: appWindow
 
-    initialPage: mainPage
+    initialPage: linePage
 
     Component.onCompleted: theme.inverted = true;
 
     MainPage {
         id: mainPage
+    }
+
+    LinePage {
+        id: linePage
     }
 }
