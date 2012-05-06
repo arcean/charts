@@ -8,44 +8,46 @@ Chart::Chart(QDeclarativeItem *parent) :
 
     currentHightlight = 1;
 
+    for ( int i = 0; i < 180; i++) {
     pointsX.append(2);
-    pointsX.append(5);
-    pointsX.append(8.5);
-    pointsX.append(11);
-    pointsX.append(14.5);
-    pointsX.append(19);
-    pointsX.append(15.3223);
-    pointsX.append(12.1212);
-    pointsX.append(-2.32);
-    pointsX.append(0);
-    pointsX.append(0.43);
-    pointsX.append(-12.54);
+    pointsX.append(2.1);
+    pointsX.append(2.4);
+    pointsX.append(2.2);
+    pointsX.append(2.5);
+    pointsX.append(2.7);
+    pointsX.append(2.9);
+    pointsX.append(2.94);
+    pointsX.append(2.76);
+    pointsX.append(2.77);
+    pointsX.append(2.81);
+    pointsX.append(2.84);
 
-    pointsY.append(12);
-    pointsY.append(14);
-    pointsY.append(12.5);
-    pointsY.append(15);
-    pointsY.append(17);
-    pointsY.append(11);
-    pointsY.append(-16);
-    pointsY.append(-16.54);
-    pointsY.append(-17.32);
-    pointsY.append(-14.32);
-    pointsY.append(-5.43);
-    pointsY.append(-4.3221);
+    pointsY.append(4);
+    pointsY.append(4.1);
+    pointsY.append(4.4);
+    pointsY.append(4.2);
+    pointsY.append(4.5);
+    pointsY.append(4.7);
+    pointsY.append(16.9);
+    pointsY.append(4.94);
+    pointsY.append(4.76);
+    pointsY.append(4.77);
+    pointsY.append(4.81);
+    pointsY.append(4.84);
 
-    pointsZ.append(-4);
-    pointsZ.append(-5);
-    pointsZ.append(-6);
-    pointsZ.append(-7);
-    pointsZ.append(-8);
-    pointsZ.append(-7.6);
-    pointsZ.append(-7.4);
-    pointsZ.append(-6.4);
-    pointsZ.append(-6.1);
-    pointsZ.append(-5.4332);
-    pointsZ.append(-7.322);
-    pointsZ.append(-2.0970);
+    pointsZ.append(-2);
+    pointsZ.append(-2.1);
+    pointsZ.append(-2.4);
+    pointsZ.append(-2.2);
+    pointsZ.append(-2.5);
+    pointsZ.append(-2.7);
+    pointsZ.append(-2.9);
+    pointsZ.append(-2.94);
+    pointsZ.append(-2.76);
+    pointsZ.append(-2.77);
+    pointsZ.append(-2.81);
+    pointsZ.append(-2.84);
+    }
 }
 
 void Chart::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -66,15 +68,26 @@ void Chart::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     int number = pointsX.size() - 1;
     //! Empty space between colored columns
     int spacer = width() / number;
-    int width = number * spacer;
+    //int width = number * spacer;
+    divideCounter = 0;
 
-    painter->setPen(backgroundColumns);
+    while (true) {
+        if (spacer == 0) {
+            number = number / 2;
+            spacer = this->width() / number;
+            divideCounter++;
+        }
+        else
+            break;
+    }
 
-    painter->drawRect(0, 0, width + 1, height());
+  //  painter->setPen(backgroundColumns);
+
+  //  painter->drawRect(0, 0, width + 1, height());
     //painter->fillRect(0, 0, width, this->height(), QColor("#000400"));
 
-    for (int i = 0; i <= number; i++)
-        painter->drawLine((i * spacer) + 1, 0, (i * spacer) + 1, height());
+  //  for (int i = 0; i <= number; i++)
+  //      painter->drawLine((i * spacer) + 1, 0, (i * spacer) + 1, height());
 
     //! Highlight column
     painter->setPen(hightlightColumn);
@@ -82,22 +95,60 @@ void Chart::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 
     //! Draw horizontal line
     painter->setPen(horizontalLinePen);
-    painter->drawLine(0, (this->height() / 2) - 1, width, (this->height() / 2) - 1);
+    painter->drawLine(0, (this->height() / 2) - 1, width(), (this->height() / 2) - 1);
 
     painter->setPen(penX);
 
-    for (int i = 1; i < pointsX.length(); i++)
-        painter->drawLine((i - 1) * spacer, convertValues(pointsX.at(i - 1)), i * spacer, convertValues(pointsX.at(i)));
+    int tmp;
+
+    for (int i = 1; i < pointsX.length(); i++) {
+        if (divideCounter != 0)
+            tmp = i / (divideCounter * 2);
+        else
+            tmp = i;
+
+        if (divideCounter != 0) {
+            if (i % (divideCounter * 2) == 0) {
+                painter->drawLine((tmp - 1) * spacer, convertValues(pointsX.at(tmp - 1)), tmp * spacer, convertValues(pointsX.at(tmp)));
+            }
+        }
+        else
+            painter->drawLine((tmp - 1) * spacer, convertValues(pointsX.at(tmp - 1)), tmp * spacer, convertValues(pointsX.at(tmp)));
+    }
 
     painter->setPen(penY);
 
-    for (int i = 1; i < pointsY.length(); i++)
-        painter->drawLine((i - 1) * spacer, convertValues(pointsY.at(i - 1)), i * spacer, convertValues(pointsY.at(i)));
+    for (int i = 1; i < pointsY.length(); i++) {
+        if (divideCounter != 0)
+            tmp = i / (divideCounter * 2);
+        else
+            tmp = i;
+
+        if (divideCounter != 0) {
+            if (i % (divideCounter * 2) == 0) {
+                painter->drawLine((tmp - 1) * spacer, convertValues(pointsY.at(tmp - 1)), tmp * spacer, convertValues(pointsY.at(tmp)));
+            }
+        }
+        else
+            painter->drawLine((tmp - 1) * spacer, convertValues(pointsY.at(tmp - 1)), tmp * spacer, convertValues(pointsY.at(tmp)));
+    }
 
     painter->setPen(penZ);
 
-    for (int i = 1; i < pointsZ.length(); i++)
-        painter->drawLine((i - 1) * spacer, convertValues(pointsZ.at(i - 1)), i * spacer, convertValues(pointsZ.at(i)));
+    for (int i = 1; i < pointsZ.length(); i++) {
+        if (divideCounter != 0)
+            tmp = i / (divideCounter * 2);
+        else
+            tmp = i;
+
+        if (divideCounter != 0) {
+            if (i % (divideCounter * 2) == 0) {
+                painter->drawLine((tmp - 1) * spacer, convertValues(pointsZ.at(tmp - 1)), tmp * spacer, convertValues(pointsZ.at(tmp)));
+            }
+        }
+        else
+            painter->drawLine((tmp - 1) * spacer, convertValues(pointsZ.at(tmp - 1)), tmp * spacer, convertValues(pointsZ.at(tmp)));
+    }
 }
 
 int Chart::convertValues(double value)
@@ -140,6 +191,11 @@ void Chart::setCurrentHightlight(int column)
     int number = pointsX.size();
 
     if (column <= number) {
+        if (divideCounter != 0)
+            column = column / (divideCounter * 2);
+        if (column == 0)
+            column = 1;
+        qDebug() << "new column" << column;
         currentHightlight = column;
         update(0, 0, this->width(), this->height());
     }
