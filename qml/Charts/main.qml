@@ -4,9 +4,14 @@ import com.nokia.meego 1.0
 PageStackWindow {
     id: appWindow
 
-    initialPage: linePage
+    initialPage: mainPage
 
-    Component.onCompleted: theme.inverted = true;
+    platformStyle: PageStackWindowStyle {
+        background: "image://theme/meegotouch-emptystate-background-portrait"
+        backgroundFillMode: Image.Stretch
+    }
+
+    //Component.onCompleted: theme.inverted = true;
 
     MainPage {
         id: mainPage

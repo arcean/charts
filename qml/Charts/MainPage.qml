@@ -21,7 +21,20 @@ Page {
                 diagonalLine.addPoint(-9.75, 3)
                 diagonalLine.addPoint(-9.93, 3)
                 diagonalLine.addPoint(-10.21, 3)
+                timer.start();
             }
+        }
+    }
+
+    Timer {
+        id: timer
+        running: false
+        repeat: true
+        interval: 1000
+        property int inc: 1
+        onTriggered: {
+            diagonalLine.setCurrentHightlight(inc);
+            inc++;
         }
     }
 
