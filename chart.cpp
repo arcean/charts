@@ -54,9 +54,9 @@ void Chart::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     QPen penX(QColor("#5BB600"), 2);
     QPen penY(QColor("#5B00B6"), 2);
     QPen penZ(QColor("#B6005B"), 2);
-    QPen backgroundColumns(QColor("#0F2D00"), 2);
-    QPen horizontalLinePen(QColor("#0F2D00"), 2);
-    QPen hightlightColumn(QColor("blue"), 2);
+    QPen backgroundColumns(QColor("#303335"), 2);
+    QPen horizontalLinePen(QColor("#303335"), 2);
+    QPen hightlightColumn(QColor("#8D18BE"), 2);
 
     if(smooth() == true) {
         painter->setRenderHint(QPainter::Antialiasing, true);
@@ -65,19 +65,20 @@ void Chart::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     //! Number of all points
     int number = pointsX.size() - 1;
     //! Empty space between colored columns
-    int spacer = this->width() / number;
+    int spacer = width() / number;
     int width = number * spacer;
 
     painter->setPen(backgroundColumns);
 
-    painter->drawRect(0, 0, width, this->height());
+    painter->drawRect(0, 0, width + 1, height());
     //painter->fillRect(0, 0, width, this->height(), QColor("#000400"));
 
     for (int i = 0; i <= number; i++)
-        painter->drawLine(i * spacer, 0, i * spacer, this->height());
+        painter->drawLine((i * spacer) + 1, 0, (i * spacer) + 1, height());
 
+    //! Highlight column
     painter->setPen(hightlightColumn);
-    painter->drawLine((this->currentHightlight-1) * spacer, 0, (this->currentHightlight-1) * spacer, this->height());
+    painter->drawLine((currentHightlight-1) * spacer, 0, (currentHightlight-1) * spacer, height());
 
     //! Draw horizontal line
     painter->setPen(horizontalLinePen);
@@ -109,7 +110,7 @@ int Chart::convertValues(double value)
 
 void Chart::updateChart()
 {
-    this->update(0, 0, this->width(), this->height());
+    update(0, 0, this->width(), this->height());
 }
 
 void Chart::addPoint(int y, int lineType)
@@ -135,6 +136,11 @@ void Chart::addPoint(int y, int lineType)
 
 void Chart::setCurrentHightlight(int column)
 {
-    this->currentHightlight = column;
-    this->update(0, 0, this->width(), this->height());
+    //! Number of all points
+    int number = pointsX.size();
+
+    if (column <= number) {
+        currentHightlight = column;
+        update(0, 0, this->width(), this->height());
+    }
 }

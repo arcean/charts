@@ -21,6 +21,7 @@ Page {
                 diagonalLine.addPoint(-9.75, 3)
                 diagonalLine.addPoint(-9.93, 3)
                 diagonalLine.addPoint(-10.21, 3)
+                timer.inc = 1;
                 timer.start();
             }
         }
