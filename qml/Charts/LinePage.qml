@@ -14,10 +14,17 @@ Page {
         smooth: true
         value: 12
 
+        Behavior on value { PropertyAnimation { duration: 500; easing.type: Easing.Linear; } }
+
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                diagonalLine.value = 4;
+                console.log('val1', diagonalLine.value)
+                if (diagonalLine.value == 12)
+                    diagonalLine.value = 4;
+                else
+                    diagonalLine.value = 12;
+                console.log('val2', diagonalLine.value)
             }
         }
     }

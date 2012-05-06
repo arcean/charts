@@ -42,6 +42,7 @@ void Line::setValue(double value)
 {
     qDebug() << "rec value" << value;
     this->lineValue = (this->width() * value) / 22;
+    this->realLineValue = value;
     qDebug() << "lin value " << lineValue;
     this->update(0, 0, this->width(), this->height());
     emit valueChanged();
