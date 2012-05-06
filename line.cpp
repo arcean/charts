@@ -31,6 +31,9 @@ void Line::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 
 void Line::setValue(double value)
 {
+    if (value > 22)
+        value = 22;
+
     this->lineValue = (this->width() * value) / 22;
     this->realLineValue = value;
     this->update(0, 0, this->width(), this->height());

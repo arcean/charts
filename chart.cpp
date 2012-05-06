@@ -107,6 +107,9 @@ void Chart::updateChart()
 
 void Chart::addPoint(int y, int lineType)
 {
+    if (y > 22)
+        y = 22;
+
     //! Line type: 1 - X, 2 - Y, 3 - Z
     switch (lineType) {
     case 1:
