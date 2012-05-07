@@ -17,9 +17,6 @@ public:
     Q_INVOKABLE void setCurrentHightlight(int column);
     Q_INVOKABLE int getSpacer();
 
-signals:
-    void highlightedX(int x_value);
-
 private:
     int convertValues(double value);
 
