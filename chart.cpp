@@ -68,15 +68,11 @@ void Chart::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     painter->setPen(hightlightColumn);
     painter->drawLine((currentHightlight-1) * spacer, 0, (currentHightlight-1) * spacer, height());
 
-    //! Draw horizontal line
-    painter->setPen(horizontalLinePen);
-    painter->drawLine(0, (this->height() / 2) - 1, this->width(), (this->height() / 2) - 1);
-
     //! Paint everything between ((currentHightlight-1) * spacer) - 220
     //! and ((currentHightlight-1) * spacer) + 220
     //! Our values:
-    int begin = (((currentHightlight-1) * spacer) - 240) / spacer;
-    int end = (((currentHightlight-1) * spacer) + 240) / spacer;
+    int begin = (((currentHightlight-1) * spacer) - 220) / spacer;
+    int end = (((currentHightlight-1) * spacer) + 220) / spacer;
 
     begin++;
     end++;
@@ -86,6 +82,10 @@ void Chart::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 
     if (begin < 1)
         begin = 1;
+
+    //! Draw horizontal line
+    painter->setPen(horizontalLinePen);
+    painter->drawLine((begin-1) * spacer, (this->height() / 2) - 1, (end-1) * spacer, (this->height() / 2) - 1);
 
     painter->setPen(penX);
 
@@ -119,7 +119,7 @@ void Chart::updateChart()
     //! Number of all points
     number = pointsX.size() - 1;
     //! Empty space between colored columns
-    calcWidth = 460;
+    calcWidth = 440;
     spacer = calcWidth / number;
 
     if (spacer < 4)
