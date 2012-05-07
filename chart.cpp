@@ -167,7 +167,5 @@ void Chart::setCurrentHightlight(int column)
             column = 1;
         currentHightlight = column;
         update((currentHightlight-1) * spacer, 0, (currentHightlight-1) * spacer, height());
-
-        emit highlightedX((currentHightlight-1) * spacer);
     }
 }
